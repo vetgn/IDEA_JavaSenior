@@ -10,7 +10,7 @@ package Java;
  * 6.yield()：释放当前cpu的执行权
  * 7.join()：在线程a中调用线程b的join()，此时线程a就会进入阻塞状态，直到线程b完全执行完以后，线程a才结束阻塞状态,类似于插队
  * 8.stop():已过时。当执行此方法时，强制结束当前线程
- * 9.sleep(Long millitime):让当前线程“睡眠”指定的millitime毫秒。在指定的millitime毫秒时间里，当前线程是阻塞状态。
+ * 9.sleep(Long milli time):让当前线程“睡眠”指定的milli time毫秒。在指定的milli time毫秒时间里，当前线程是阻塞状态。
  * 10.isAlive()：判断当前线程是否存活
  * <p>
  * <p>

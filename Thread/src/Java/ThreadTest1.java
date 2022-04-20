@@ -1,7 +1,7 @@
 package Java;
 
 /**
- * \
+ *
  * 创建多线程的方式二：实现Runnable接口
  * 1.创建一个实现Runnable接口的类
  * 2.实现类去实现Runnable中的抽象方法:run()
