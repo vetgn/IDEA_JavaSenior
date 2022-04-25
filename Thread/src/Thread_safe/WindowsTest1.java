@@ -28,9 +28,11 @@ package Thread_safe;
  * 要求：多个线程必须要共用同一把锁(比如上厕所，厕所有人时亮红灯，但是如果不是同一个锁，那么别人看来是红灯，自己看来
  * 是绿灯，那么就会出事)
  * <p>
+ * <p>
+ * 补充：在实现Runnable接口创建多线程的方式中，我们可以考虑使用this充当同步监视器。
  * 方式二：同步方法
- *
- * <P>同步的方式，解决了线程的安全问题。---好处
+ * <p>如何操作共享数据的代码完整的声明在一个方法中，我们不妨将此方法声明同步的</p>
+ * <P>5.同步的方式，解决了线程的安全问题。---好处
  * <P>操作同步代码时，只能有一个线程参与，其他线程等待。相当于是一个单线程的过程,效率低。 ---局限性
  *
  * @author ZJJ
@@ -46,7 +48,7 @@ class Windows1 implements Runnable {
 
     @Override
     public void run() {
-        synchronized (dog) {
+        synchronized (this) {//此时this在本程序中指的是唯一的windows1        方式二： //synchronized (dog) {
             while (true) {
                 if (ticket > 0) {
                     try {
