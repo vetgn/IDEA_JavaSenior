@@ -1,7 +1,7 @@
 package Thread_safe;
 
 /**
- * 例：三个窗口售卖票，一共100张,使用继承Thread的方法
+ * 例：三个窗口售卖票，一共100张,使用继承Thread的方法，有线程安全问题
  *
  * @author ZJJ
  * #Description Windows
