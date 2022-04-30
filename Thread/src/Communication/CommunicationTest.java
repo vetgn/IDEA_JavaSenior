@@ -14,7 +14,8 @@ package Communication;
  * ，否则，会出现IllegalMonitorStateException异常</p>
  * <p>3.wait(),notify(),notifyAll()三个方法时定义在java.lang.Object类中</p>
  * <p>
- * 面试题: sleep()和wait()的异同?<p>
+ * <p>
+ * 面试题: sleep()和wait()的异同?
  * <p>1.相同点:一旦执行方法,都可以使得当前的线程进入阻塞状态。
  * <p>2.不同点:
  * <p>(1)两个方法声明的位置不同: Thread类中声明sleep() ,Object类中声明wait()
