@@ -47,9 +47,73 @@ public class StringTest {
         System.out.println("**************");
 
         String s4 = "abc";
-        String s5 = s4.replace('a','m');
+        String s5 = s4.replace('a', 'm');
         System.out.println(s4);//abc
         System.out.println(s5);//mbc
+
+    }
+
+    /*
+     * String的实例化方式：
+     * 方式一：通过字面量定义的方式
+     * 方式二：通过new + 构造器的方式
+     *
+     * 面试题：String s = new String("abc");方式创建对象，在内存中创建了几个对象？
+     *      两个： 一个是堆空间中new 结构，另一个是char[]对应的常量池中的数据："abc"
+     * */
+    @Test
+    public void test2() {
+//        方式一：通过字面量定义的方式：此时的s1和s2的数据javaEE声明在方法区中的字符串常量池中。
+        String s1 = "javaEE";
+        String s2 = "javaEE";
+//        方式二：通过new + 构造器的方式：此时的s3和s4保存的地址值，是数据在堆空间中开辟空间以后对应的地址值。
+        String s3 = new String("javaEE");
+        String s4 = new String("javaEE");
+
+        System.out.println(s1 == s2);//true
+        System.out.println(s1 == s3);//false
+        System.out.println(s1 == s4);//false
+        System.out.println(s3 == s4);//false
+
+        System.out.println("*************");
+
+        Person person1 = new Person("Tom", 12);
+        Person person2 = new Person("Tom", 12);
+        System.out.println(person1.name.equals(person2.name));//true
+        System.out.println(person1.name == person2.name);//true
+
+        person1.name = "mike";
+        System.out.println(person2.name);//Tom  String 的不可变性
+    }
+
+
+    /*结论:
+    1.常量与常量的拼接结果在常量池。且常量池中不会存在相同内容的常量。
+    2.只要其中有一个是变量,结果就在堆中。
+    3.如果拼接的结果调用intern()方法,返回值就在常量池中
+    */
+    @Test
+    public void test3() {
+        String s1 = "javaEE";
+        String s2 = "hadoop";
+
+        String s3 = "javaEEhadoop";
+        String s4 = "javaEE" + "hadoop";//像这种的拼接，如果在常量池中有相同的，就会调用常量池中的
+        String s5 = s1 + "hadoop";//而这种有 s1 这种的出现，则相当于会 new 一个对象，会先指向 value 再指向 char[]
+        String s6 = "javaEE" + s2;
+        String s7 = s1 + s2;
+
+        System.out.println(s3 == s4);//true
+        System.out.println(s3 == s5);//false
+        System.out.println(s3 == s6);//false
+        System.out.println(s3 == s7);//false
+        System.out.println(s5 == s6);//false
+        System.out.println(s5 == s7);//false
+        System.out.println(s6 == s7);//false
+
+        /*intern()方法会强制调用常量池中的数*/
+        String s8 = s5.intern();
+        System.out.println(s3 == s8);//true
     }
 }
 
