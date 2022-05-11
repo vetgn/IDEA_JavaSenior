@@ -1,4 +1,4 @@
-package Java;
+package StringMethod;
 
 /**
  * 测试Thread中的常用方法
