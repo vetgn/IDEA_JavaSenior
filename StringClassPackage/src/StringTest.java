@@ -93,13 +93,25 @@ public class StringTest {
     3.如果拼接的结果调用intern()方法,返回值就在常量池中
     */
     @Test
+    public void test4() {
+        String s1 = "JavaEE";
+        String s2 = "hadoop";
+        String s3 = "JavaEEhadoop";
+        String s4 = s1 + "hadoop";
+        System.out.println(s3 == s4);//false
+        final String s5 = "JavaEE";// 此时声明的s5 是一个常量
+        String s6 = s5 + "hadoop";
+        System.out.println(s3 == s6);//true
+    }
+
+    @Test
     public void test3() {
         String s1 = "javaEE";
         String s2 = "hadoop";
 
         String s3 = "javaEEhadoop";
         String s4 = "javaEE" + "hadoop";//像这种的拼接，如果在常量池中有相同的，就会调用常量池中的
-        String s5 = s1 + "hadoop";//而这种有 s1 这种的出现，则相当于会 new 一个对象，会先指向 value 再指向 char[]
+        String s5 = s1 + "hadoop";//而这种有 s1 这种变量的出现，则相当于会 new 一个对象，会先指向 value 再指向 char[]
         String s6 = "javaEE" + s2;
         String s7 = s1 + s2;
 
