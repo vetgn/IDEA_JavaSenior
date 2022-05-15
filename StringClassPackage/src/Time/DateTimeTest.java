@@ -41,13 +41,13 @@ public class DateTimeTest {
     public void test2(){
 //        构造器一：Date()：创建一个当前时间的Date对象
         Date date1 = new Date();
-        System.out.println(date1.toString());// Sat May 14 19:34:13 CST 2022
+        System.out.println(date1);// Sat May 14 19:34:13 CST 2022
 
         System.out.println(date1.getTime());//1652528201652
 
 //        构造器二：创建指定豪秒数的Date对象
         Date date2 = new Date(1652528201652L);
-        System.out.println(date2.toString());
+        System.out.println(date2);
 
 //        创建java.sql.Date对象
         java.sql.Date date3 = new java.sql.Date(4453534653453L);

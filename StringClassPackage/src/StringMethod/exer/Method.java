@@ -16,7 +16,7 @@ public class Method {
         System.out.println("---" + trim(str) + "---");
         System.out.println("反转方法");
         str = "abcdefg";
-        System.out.println(Reversal(str, 2, 5));
+        System.out.println(Reversal1(str, 2, 5));
         System.out.println("**********");
         System.out.println(getNumber("abkkcadkabkebfkabkskab", "ab"));
     }
@@ -41,7 +41,8 @@ public class Method {
     }
 
     /*将一个字符串进行反转。将字符串中指定部分进行反转。比如“abcdefg"反转为"abfedcg”*/
-    public static String Reversal(String string, int start, int end) {
+//    方式一
+    public static String Reversal1(String string, int start, int end) {
         if (string != null) {
             char[] chars = string.toCharArray();
             char t;
@@ -55,11 +56,57 @@ public class Method {
         return null;
     }
 
+    //    方式二
+    public static String Reversal2(String string, int start, int end) {
+        if (string != null) {
+//            第一部分
+            String reversalString = string.substring(0, start);
+//            第二部分
+            for (int i = end; i >= start; i--) {
+                reversalString += string.charAt(i);
+            }
+//            第三部分
+            reversalString += string.substring(end + 1, string.length());
+            return reversalString;
+        }
+        return null;
+    }
+
+    //    方式三
+    public static String Reversal3(String string, int start, int end) {
+        if (string != null) {
+            StringBuilder reversalString = new StringBuilder(string.length());
+//            第一部分
+            reversalString.append(string.substring(0, start));
+//            第二部分
+            for (int i = end; i >= start; i--) {
+                reversalString.append(string.charAt(i));
+            }
+//            第三部分
+            reversalString.append(string.substring(end + 1));
+            return reversalString.toString();
+        }
+        return null;
+    }
+
+    @Test
+    public void test1() {
+        String str1 = "abcdefg";
+        String str2 = Reversal3(str1, 2, 5);
+        System.out.println(str2);
+    }
+
     /*获取一个字符串在另一个字符串中出现的次数。比如:获取" ab"在"abkkcadkabkebfkabkskab”中出现的次数*/
     public static int getNumber(String startstring, String endstring) {
         int total = 0;
         int index = 0;
         if (startstring.contains(endstring)) {
+            //方式一
+//            while ((index = startstring.indexOf(endstring)) != -1) {
+//                total++;
+//                startstring = startstring.substring(index + endstring.length());//每次都会创建一个startstring
+//            }
+            //方式二:方法一的改进
             while ((index = startstring.indexOf(endstring, index)) != -1) {
                 index += endstring.length();
                 total++;
@@ -82,6 +129,31 @@ public class Method {
                     }
                 }
             }
+        }
+        return null;
+    }
+
+    public static String[] gain1(String str1, String str2) {
+        if (str1 != null && str2 != null) {
+            String maxstr = (str1.length() > str2.length()) ? str1 : str2;
+            String minstr = (str1.length() > str2.length()) ? str2 : str1;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            int len = minstr.length();
+            for (int i = 0; i < len; i++) {
+                for (int x = 0, y = len - i; y <= len; x++, y++) {
+                    if (maxstr.contains(minstr.substring(x, y))) {
+                        stringBuilder.append(minstr + ",");
+                    }
+                }
+                System.out.println(stringBuilder);
+                if (stringBuilder.length() != 0) {
+                    break;
+                }
+            }
+//           stringBuilder转化为String类型，将,全部转化为" ",再调用split进行分割
+            String[] splits = stringBuilder.toString().replaceAll(",$", " ").split("\\,");
+            return splits;
         }
         return null;
     }
