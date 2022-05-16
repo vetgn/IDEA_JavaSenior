@@ -20,7 +20,10 @@ import java.util.Date;
  */
 public class DateTime1 {
     /*
-     * 的使用：SimpleDateFormat对日期Date类的格式化和解析
+     *(注意：获取月份时：一月是0，二月是1，以此类推，12月是11
+     *      获取星期时：周日是1，周二是2,。。。周六是7)
+     *
+     *  的使用：SimpleDateFormat对日期Date类的格式化和解析
      *
      * 1.两个操作：
      * 1.1格式化： 日期 ---> 字符串
@@ -107,7 +110,7 @@ public class DateTime1 {
         int days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
         System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
-        System.out.printf("*******");
+        System.out.println("*******");
 
 //        set()  是void方法 对calendar本身进行了修改
         calendar.set(Calendar.DAY_OF_MONTH, 22);
