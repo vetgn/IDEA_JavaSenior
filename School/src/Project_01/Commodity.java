@@ -35,17 +35,16 @@ public class Commodity {
     private String factory;// 商品生产
     private int days;// 商品天数
 
-    private static final int FOOD = 0;
-    private static final int PAPER = 1;
-    private static final int CLEANING = 2;
-    private static final int ELECTRIC = 3;
+//    private static final int FOOD = 0;//食品
+//    private static final int PAPER = 1;//纸质
+//    private static final int CLEANING = 2;//洗化
+//    private static final int ELECTRIC = 3;//电器
 
     public Commodity() {
     }
 
-    public Commodity(String name, String ID, double price, String category, int number, String factory, int days) {
+    public Commodity(String name, double price, String category, int number, String factory, int days) {
         this.name = name;
-        this.ID = ID;
         this.price = price;
         this.category = category;
         this.number = number;
