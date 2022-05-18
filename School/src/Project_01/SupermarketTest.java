@@ -86,7 +86,7 @@ public class SupermarketTest {
         System.out.print("请输入商品名称:");
         String name = scanner.next();
         //商品价格
-        System.out.print("请输入商品价格");
+        System.out.print("请输入商品价格:");
         double price = scanner.nextDouble();
         //类别
         System.out.print("请输入商品类别:");
@@ -102,7 +102,7 @@ public class SupermarketTest {
         int days = scanner.nextInt();
 
         //封装到商品信息中
-        Commodity commodity1 = new Commodity(name, price, category, number, factory, days);
+        Commodity commodity1 = new Commodity(name, price, category, number, factory, days, (supermarketList.getTotal() + 1));
         //添加商品
         boolean s = supermarketList.addCommodity(commodity1);
         if (s) {
@@ -177,7 +177,7 @@ public class SupermarketTest {
             throw new MyException("没有这个商品!");
         } else {
             //进行删除操作
-            supermarketList.deleteCommodity(id);
+            supermarketList.deleteCommodity(id - 1);
             System.out.println();
             System.out.println();
 
@@ -194,37 +194,83 @@ public class SupermarketTest {
             System.out.println("----------------------------");
             Menu();
         }
-        System.out.print("请问该用名称/ID排序？:");
+        System.out.print("请问该用名称(1)/ID(2)排序？:");
         String flag = scanner.next();
-        System.out.print("请问该使用升序/降序？:");
+        System.out.print("请问该使用升序(1)/降序(2)？:");
         String sign = scanner.next();
-        if (flag.equals("名称")) {
-
-        } else if (flag.equalsIgnoreCase("ID")) {
-            if (sign.equals("升序")) {
+        if (flag.equals("名称") || flag.equals("1")) {
+            if (sign.equals("升序") || sign.equals("1")) {
                 System.out.println("商品名称" + "\t" + "商品ID" + "\t" +
                         "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
                         + "\t" + "商品天数");
-                for (int i = supermarketList.getTotal() - 1; i >= 0; i--) {
-                    System.out.println(commodities[i].getName()
-                            + "\t" + (i + 1) + "\t\t" +
-                            commodities[i].getPrice() + "\t\t\t" +
-                            commodities[i].getCategory() + "\t\t\t" +
-                            commodities[i].getNumber() + "\t\t\t" +
-                            commodities[i].getDays());
+                Commodity t;
+                for (int i = 0; i < supermarketList.getTotal() - 1; i++) {
+                    for (int j = i + 1; j < supermarketList.getTotal(); j++) {
+                        if (commodities[j].getName().compareTo(commodities[i].getName()) > 0) {
+                            t = commodities[j];
+                            commodities[j] = commodities[i];
+                            commodities[i] = t;
+                        }
+                    }
                 }
-            } else if (sign.equals("降序")) {
+                for (int i = supermarketList.getTotal() - 1; i >= 0; i--) {
+                    supermarketList.PrintCommodity(i);
+                }
+                System.out.println("----------------------------");
+                Menu();
+            } else if (sign.equals("降序") || sign.equals("2")) {
+                System.out.println("商品名称" + "\t" + "商品ID" + "\t" +
+                        "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
+                        + "\t" + "商品天数");
+                Commodity t;
+                for (int i = 0; i < supermarketList.getTotal() - 1; i++) {
+                    for (int j = i + 1; j < supermarketList.getTotal(); j++) {
+                        if (commodities[j].getName().compareTo(commodities[i].getName()) > 0) {
+                            t = commodities[j];
+                            commodities[j] = commodities[i];
+                            commodities[i] = t;
+                        }
+                    }
+                }
+                for (int i = 0; i < supermarketList.getTotal(); i++) {
+                    supermarketList.PrintCommodity(i);
+                }
+            }
+
+            System.out.println("----------------------------");
+            Menu();
+
+        } else if (flag.equalsIgnoreCase("ID") || flag.equals("2")) {
+            if (sign.equals("升序") || sign.equals("1")) {
                 System.out.println("商品名称" + "\t" + "商品ID" + "\t" +
                         "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
                         + "\t" + "商品天数");
                 for (int i = 0; i < supermarketList.getTotal(); i++) {
-                    System.out.println(commodities[i].getName()
-                            + "\t" + (i + 1) + "\t\t" +
-                            commodities[i].getPrice() + "\t\t\t" +
-                            commodities[i].getCategory() + "\t\t\t" +
-                            commodities[i].getNumber() + "\t\t\t" +
-                            commodities[i].getDays());
+                    for (int j = 0; j < supermarketList.getTotal(); j++) {
+                        if (commodities[j].getID() == (i + 1)) {
+                            supermarketList.PrintCommodity(j);
+                        }
+                    }
                 }
+                System.out.println("----------------------------");
+                System.out.println();
+                System.out.println();
+                Menu();
+            } else if (sign.equals("降序") || sign.equals("2")) {
+                System.out.println("商品名称" + "\t" + "商品ID" + "\t" +
+                        "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
+                        + "\t" + "商品天数");
+                for (int i = supermarketList.getTotal(); i >= 0; i--) {
+                    for (int j = 0; j < supermarketList.getTotal(); j++) {
+                        if (commodities[j].getID() == (i + 1)) {
+                            supermarketList.PrintCommodity(j);
+                        }
+                    }
+                }
+                System.out.println("----------------------------");
+                System.out.println();
+                System.out.println();
+                Menu();
             }
         }
     }
@@ -242,12 +288,7 @@ public class SupermarketTest {
                     "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
                     + "\t" + "商品天数");
             for (int i = 0; i < supermarketList.getTotal(); i++) {
-                System.out.println(commodities[i].getName()
-                        + "\t" + (i + 1) + "\t\t" +
-                        commodities[i].getPrice() + "\t\t\t" +
-                        commodities[i].getCategory() + "\t\t\t" +
-                        commodities[i].getNumber() + "\t\t\t" +
-                        commodities[i].getDays());
+                supermarketList.PrintCommodity(i);
             }
         }
 

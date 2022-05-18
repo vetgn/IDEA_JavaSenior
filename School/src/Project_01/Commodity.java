@@ -4,7 +4,7 @@
  * @LastEditors: vetgn
  * @LastEditTime: 2022-05-08 22:40:05
  * @FilePath: \vscode_Java_SanGuiGu\SCHOOL\src\Practice\Commodity.java
- * @Description: 
+ * @Description:
  * 1.超市商品管理信息系统
  * 超市商品信息包括：商品名称、商品ID、商品价格、类别（食品、纸质、
  * 洗化、电器等）、商品份数、商品生产(生产厂家)、保质天数。试用面向对象程序设计思想，
@@ -22,18 +22,18 @@
  *     删除指定ID的商品。
  * 8、排序功能（由用户指定按照名称或ＩＤ；指定升序或降序）
  * 9、退出
- * 
+ *
  */
 package Project_01;
 
 public class Commodity {
     private String name;// 商品名称
-    private String ID;// 商品ID
     private double price;// 商品价格
     private String category;// 商品类别（食品、纸质、洗化、电器等）
     private int number;// 商品份数
     private String factory;// 商品生产
     private int days;// 商品天数
+    private int ID;// 商品ID
 
 //    private static final int FOOD = 0;//食品
 //    private static final int PAPER = 1;//纸质
@@ -43,14 +43,16 @@ public class Commodity {
     public Commodity() {
     }
 
-    public Commodity(String name, double price, String category, int number, String factory, int days) {
+    public Commodity(String name, double price, String category, int number, String factory, int days, int ID) {
         this.name = name;
         this.price = price;
         this.category = category;
         this.number = number;
         this.factory = factory;
         this.days = days;
+        this.ID = ID;
     }
+
 
     public String getFactory() {
         return factory;
@@ -68,11 +70,11 @@ public class Commodity {
         this.name = name;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String iD) {
+    public void setID(int iD) {
         ID = iD;
     }
 

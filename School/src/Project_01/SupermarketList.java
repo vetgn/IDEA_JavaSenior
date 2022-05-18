@@ -59,6 +59,15 @@ public class SupermarketList {
         }
         return com;
     }
+    /*输出指定商品*/
+    public void PrintCommodity(int i){
+        System.out.println(commodities[i].getName()
+                + "\t\t" + commodities[i].getID() + "\t\t" +
+                commodities[i].getPrice() + "\t\t\t" +
+                commodities[i].getCategory() + "\t\t\t" +
+                commodities[i].getNumber() + "\t\t\t" +
+                commodities[i].getDays());
+    }
 
     /**
      * 修改指定商品的信息
@@ -73,8 +82,8 @@ public class SupermarketList {
      * @param ID
      */
     public void deleteCommodity(int ID) {
-        for (int i = ID; i < commodities.length; i++) {
-            commodities[i] = commodities[i++];
+        for (int i = ID; i < total-1; i++) {
+            commodities[i] = commodities[i+1];
         }
         commodities[--total] = null;
     }
