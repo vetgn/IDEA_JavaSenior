@@ -9,18 +9,15 @@
  */
 package Project_01;
 
-import org.junit.Test;
-
 import java.util.Scanner;
 //System.out.println("商品名称\t商品ID\t商品价格\t类别\t商品份数\t商品生产\t保质天数");
 
 public class SupermarketTest {
     Scanner scanner = new Scanner(System.in);
-    private SupermarketList supermarketList = new SupermarketList(10);
+    private final SupermarketList supermarketList = new SupermarketList(10);
 
-    //    private String category;// 商品类别（食品、纸质、洗化、电器等）
-    //TODO:
     /*菜单功能*/
+//    TODO:差文件的读入，存档
     public void Menu() {
         System.out.println("1-浏览商品");
         System.out.println("2-录入商品");
@@ -81,7 +78,6 @@ public class SupermarketTest {
     /*添加商品*/
     public void AddCommodity() {
         System.out.println("----------添加商品----------");
-        Commodity commodity = new Commodity();
         //商品名称
         System.out.print("请输入商品名称:");
         String name = scanner.next();
@@ -186,6 +182,7 @@ public class SupermarketTest {
     }
 
     /*商品排序（由用户指定按照名称或ＩＤ；指定升序或降序）*/
+//    TODO:希望排序后不会改变商品原本的顺序
     public void SortCommodity() {
         Commodity[] commodities = supermarketList.lookCommodity();
         System.out.println("----------商品排序----------");
@@ -194,9 +191,9 @@ public class SupermarketTest {
             System.out.println("----------------------------");
             Menu();
         }
-        System.out.print("请问该用名称(1)/ID(2)排序？:");
+        System.out.print("请问该用 名称(1)/ID(2) 排序？:");
         String flag = scanner.next();
-        System.out.print("请问该使用升序(1)/降序(2)？:");
+        System.out.print("请问该使用 升序(1)/降序(2) ？:");
         String sign = scanner.next();
         if (flag.equals("名称") || flag.equals("1")) {
             if (sign.equals("升序") || sign.equals("1")) {
@@ -277,7 +274,6 @@ public class SupermarketTest {
 
     /*浏览商品*/
     public void LookCommodity() {
-        Commodity[] commodities = supermarketList.lookCommodity();
         System.out.println("----------浏览商品----------");
         if (supermarketList.getTotal() <= 0) {
             System.out.println("无商品!");
@@ -301,7 +297,60 @@ public class SupermarketTest {
      * 1）按商品名称查询
      * 2）按类别名称查询*/
     public void InquireCommodity() {
+        int number = 0;
+        Commodity[] commodities = supermarketList.lookCommodity();
         System.out.println("----------商品查询----------");
+        System.out.print("按照 商品名称(1)/类别名称(2) 查询?:");
+        String flag1 = scanner.next();
+        if (flag1.equals("1") || flag1.equals("商品名称")) {
+            System.out.print("请输入商品名称");
+            String name = scanner.next();
+            for (int i = 0; i < supermarketList.getTotal(); i++) {
+                if (name.equals(commodities[i].getName())) {
+                    number++;
+                }
+            }
+            if (number == 0) {
+                System.out.println("没有此商品!");
+            } else {
+                System.out.println("商品名称" + "\t" + "商品ID" + "\t" +
+                        "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
+                        + "\t" + "商品天数");
+                for (int j = 0; j < supermarketList.getTotal(); j++) {
+                    if (name.equals(commodities[j].getName())) {
+                        supermarketList.PrintCommodity(j);
+                    }
+                }
+
+            }
+
+            System.out.println("----------------------------");
+            Menu();
+        } else if (flag1.equals("2") || flag1.equals("类别名称")) {
+            System.out.print("请输入商品的类别:");
+            String category = scanner.next();
+            for (int i = 0; i < supermarketList.getTotal(); i++) {
+                if (category.equals(commodities[i].getCategory())) {
+                    number++;
+                }
+            }
+            if (number == 0) {
+                System.out.println("没有此商品!");
+            } else {
+                System.out.println("商品名称" + "\t" + "商品ID" + "\t" +
+                        "商品价格" + "\t" + "商品类别" + "\t" + "商品份数"
+                        + "\t" + "商品天数");
+                for (int j = 0; j < supermarketList.getTotal(); j++) {
+                    if (category.equals(commodities[j].getCategory())) {
+                        supermarketList.PrintCommodity(j);
+                    }
+                }
+            }
+        }
+        System.out.println("----------------------------");
+
+        Menu();
+
     }
 
     public static void main(String[] args) {
