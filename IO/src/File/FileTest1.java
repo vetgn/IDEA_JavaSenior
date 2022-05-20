@@ -39,7 +39,7 @@ public class FileTest1 {
     @Test
     public void test1() {
         //构造器1
-        File file1 = new File("hello.txt");//相较于当前module的路径
+        File file1 = new File("hello.txt");//相较于当前module的路径(注意：如果是main()方法，则是在工程下，即IDEA_JavaSenoir)
         File file2 = new File("D:\\JavaCode\\IDEA_JavaSenoir\\FileTestPath\\he.txt");
 
         System.out.println(file1);//hello.txt
