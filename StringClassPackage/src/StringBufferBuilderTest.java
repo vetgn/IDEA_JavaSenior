@@ -14,8 +14,8 @@ public class StringBufferBuilderTest {
      * StringBuilder:可变的字符序列；jdk5.0新增，线程不安全，效率高；底层使用char[]存储
      *
      * 源码分析：
-     * String str = new String();//char[] value = new char[0];
-     * String str1 - new String("abc");//char[] value = new char[]{'a','b','c'};
+     * String str = new String();//char[] value = new char[0];![](img_1.png)
+     * String str1 = new String("abc");//char[] value = new char[]{'a','b','c'};
      *
      * StringBuffer sb1 = new StringBuffer();//char[] value = new char[16];底层创建了一个长度是16的数组
      * sb1.append('a');//va;ue[0]  = 'a';

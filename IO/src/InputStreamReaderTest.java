@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * 处理流之二：转换流的使用
  * 1.转换流：属于字符流
- * InputStreamReader：将一个字符的输入流转换为字符额输入流
+ * InputStreamReader：将一个字节的输入流转换为字符的输入流
  * OutputStreamWriter：将一个字符的输出流转换为字节的输出流
  * <p>
  * 2.作用：提供字节流与字符流之间的转换
@@ -15,19 +15,20 @@ import java.io.*;
  * <p>
  * 4.字符集
  * ASCII:美国标准信息交换码。
- *      用一个字节的7位可以表示。
+ * 用一个字节的7位可以表示。
  * ISO8859-1:拉丁码表。欧洲码表
- *      用一个字节的8位表示。
+ * 用一个字节的8位表示。
  * GB2312:中国的中文编码表。最多两个字节编码所有字符
  * GBK:中国的中文编码表升级,融合了更多的中文文字符号。最多两个字节编码
  * Unicode:国际标准码,融合了目前人类使用的所有字符。为每个字符分配唯一的字符码。所有的文字都用两个字节来表示。
  * UTF-8:变长的编码方式,可用1-4个字节来表示一个字符。
+ *
  * @author ZJJ
  * #Description InputStreamReaderTest
  * #Date: 2022/5/22 16:23
  */
 public class InputStreamReaderTest {
-/*此时处理异常，仍然用try-catch-finally(现在是懒)*/
+    /*此时处理异常，仍然用try-catch-finally(现在是懒)*/
     @Test
     public void test1() throws IOException {
 //        FileInputStream fis = new FileInputStream(new File("dbcp.txt")); //new File()可以省略
@@ -44,5 +45,46 @@ public class InputStreamReaderTest {
         }
 
         isr.close();
+    }
+
+    /*综合使用InputStreamReader 和 OutputStreamWriter*/
+    @Test
+    public void test2() {
+        InputStreamReader inputStreamReader = null;
+        OutputStreamWriter gbk = null;
+        try {
+            File file1 = new File("dbcp.txt");
+            File file2 = new File("dbcp-gbk.txt");
+
+            FileInputStream fileInputStream = new FileInputStream(file1);
+            FileOutputStream fileOutputStream = new FileOutputStream(file2);
+
+            inputStreamReader = new InputStreamReader(fileInputStream, "utf-8");
+            gbk = new OutputStreamWriter(fileOutputStream, "gbk");
+
+            char[] cbuf = new char[20];
+            int len;
+            while ((len = inputStreamReader.read(cbuf)) != -1) {
+                gbk.write(cbuf, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(inputStreamReader!=null)
+                inputStreamReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if(gbk!=null)
+                gbk.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 }

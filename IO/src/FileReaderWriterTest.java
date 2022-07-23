@@ -28,7 +28,7 @@ public class FileReaderWriterTest {
         System.out.println(file1.getAbsoluteFile());
     }
 
-    /*将IO下额hello.txt文件内容读入程序中，并输出到控制台
+    /*将IO下的hello.txt文件内容读入程序中，并输出到控制台
      *
      * 说明点：
      * 1.read()的理解：返回读入的一个字符。如果达到文件末尾，返回-1
@@ -156,13 +156,12 @@ public class FileReaderWriterTest {
             fw.write("I have a dream!\n");
             fw.write("you need to have a dream!");
 
-            //4.流资源的关闭
-            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
                 if (fw != null) {
+                    //4.流资源的关闭
                     fw.close();
                 }
             } catch (IOException e) {

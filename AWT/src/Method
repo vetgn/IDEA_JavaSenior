@@ -1,0 +1,15 @@
+Component作为基类，提供以下方法:
+
+setLocation(int,int):设置组件的位置。
+setSize(int,int):设置组件的大小。
+setBounds(int,int,int,int):同时设置组件的位置、大小。
+setVisible(Boolean):设置组件的可见性。
+
+Container作为容器根类，提供以下方法:
+
+Component add(Component comp):向容器中添加其他组件(该组件既可以是普通组件,也可以是容器),并返回被添加的组件。
+Component getComponentAt(int x, int y): 返回指定点的组件。
+int getComponentCount(): 返回该容器内组件的数量。
+Component[]：返回该容器内组件的数。
+getComponents():返回该容器内的所有组件。
+![](C:/Users/Administrator/OneDrive/图片/Java/无标题.png)

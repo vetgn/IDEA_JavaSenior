@@ -125,10 +125,14 @@ public class BufferedTest {
 
         System.out.println("操作消耗的时间" + (end - start));//171
     }
+
+
+
+
     /*使用BufferedReader和BufferedWriter实现文本文件的复制*/
 
     @Test
-    public void testBufferedReaderBufferedWriter(){
+    public void testBufferedReaderBufferedWriter() {
         //创建文件和相应的流
         BufferedReader br = null;
         BufferedWriter bw = null;
@@ -144,12 +148,12 @@ public class BufferedTest {
 //            }
             //方式二：
             String data;
-            while ((data = br.readLine()) != null){
+            while ((data = br.readLine()) != null) {
                 //方法一：
 //                bw.write(data  + "\n");//data中不包含换行符
                 //方法二：
                 bw.write(data);//data中不包行换行符
-                bw.newLine();//提供换行的操做
+                bw.newLine();//提供换行的操作
             }
 
         } catch (IOException e) {
@@ -157,14 +161,14 @@ public class BufferedTest {
         } finally {
             //关闭资源
             try {
-                if(br !=null)
-                br.close();
+                if (br != null)
+                    br.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                if(bw !=null)
-                bw.close();
+                if (bw != null)
+                    bw.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -14,11 +14,28 @@ import java.util.*;
  *      比如：add(E e) ---> 实例化以后：add(Integer e)
  * ④ 注意点：泛型的类型必须是类，不能是基本数据类型。需要用到基本数据类型的位置，拿包装类来代替
  * ⑤ 如果实例化时，没有指明泛型的类型。默认类型为java.lang.Object类型
+ *
+ * 3.如何自定义泛型结构:泛型类、泛型接口、泛型方法。见GenericTest1.java
+ *
+ *
  * @author ZJJ
  * #Description GenericTest
  * #Date: 2022/5/23 15:35
  */
 public class GenericTest {
+    @Test
+    public void test4(){
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Tom", 12);
+        map.put("Jom", 32);
+        map.put("ADm", 15);
+        Set<Map.Entry<String, Integer>> entry = map.entrySet();
+        Iterator<Map.Entry<String, Integer>> iterator = entry.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Integer> entry1 = iterator.next();
+        }
+    }
+
     //在集合中使用泛型之前的情况:
     @Test
     public void test1() {
