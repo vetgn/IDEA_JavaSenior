@@ -30,7 +30,7 @@ public class StringBufferBuilderTest {
      *      指导意义：开发中建议大家使用：StringBuffer(int capacity) 或 StringBuilder(int capacity)
      *
      * String --> StringBuilder : new StringBuilder(String string);
-     * StringBuilder --> String : stringbuilder.toString(String string);
+     * StringBuilder --> String : StringBuilder.toString(String string);
      * */
     @Test
     public void test1(){

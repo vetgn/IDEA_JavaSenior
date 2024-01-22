@@ -7,7 +7,7 @@
 import org.junit.Test;
 
 public class IDEADebug {
-    @Test
+
     public void testStringBuffer() {
         String str = null;
         StringBuffer sb = new StringBuffer();

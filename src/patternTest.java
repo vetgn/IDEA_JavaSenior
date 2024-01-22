@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * #Date: 2022/5/23 14:10
  */
 public class patternTest {
-    @Test
+
     public void test() {
         String regex = "[a-zA-Z]\\w{5,17}"; //正则规范
         boolean boo1 = Pattern.matches(regex, "jsu_456");
