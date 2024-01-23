@@ -9,6 +9,7 @@
 
 # 权限修饰符
 
+
 |  修饰符  | 类内部 | 同一个包 | 不同包的子类 | 同一个工程 |
 | :-------: | :----: | :------: | :----------: | :--------: |
 |  private  |  yes  |          |              |            |
@@ -63,6 +64,7 @@ x instanceof A：检验x是否为类A的对象，返回值为boolean型。
 &emsp;因此，<font color='red'>多态是一种运行时行为</font>，它允许在不同的对象上调用相同的方法名，但根据对象的实际类型执行不同的行为。这种动态的特性使得程序更加灵活、可扩展，并提高了代码的重用性。
 
 ## 包装类Wrapper
+
 
 | 基本数据类型 |  包装类  |
 | :----------: | :-------: |
@@ -125,14 +127,14 @@ x instanceof A：检验x是否为类A的对象，返回值为boolean型。
 
 1. 接口(interface)是抽象方法和常量值定义的集合。
 2. 接口的特点：
-   
+
    * 用interface来定义
    * 接口的所有成员变量都默认是由public static final修饰的。
    * 接口的所有抽象方法都默认是由public abstract修饰的。
    * 接口中没有构造器
    * 接口采用多继承机制
 3. 接口举例
-   
+
    ```java
    public interface Runner{
        int ID = 1;
@@ -141,7 +143,7 @@ x instanceof A：检验x是否为类A的对象，返回值为boolean型。
        void stop();
    }
    ```
-   
+
    ```java
    public interface Runner{
        public static final int ID = 1;
@@ -151,7 +153,7 @@ x instanceof A：检验x是否为类A的对象，返回值为boolean型。
    }
    ```
 4. 接口的默认方法
-   
+
    * 若一个接口中定义了一个默认方法，而另外一个接口中也定义了一个同名同参数的方法（不管此方法是否是默认方法），在实现类同时实现了这两个接口时，会出现：**接口冲突**。
      &emsp;解决办法：实现类必须覆盖接口中同名同参数的方法，来解决冲突。
    * 若一个接口中定义了一个默认方法，而父类中也定义了一个同名同参数的非抽象方法，则不会出现冲突问题。因为此时遵守：类优先原则。接口中具有相同名称和参数的默认方法会被忽略。
@@ -185,6 +187,187 @@ public class Main {
         greeting.greet(); // 输出：Hello, world!
     }
 }
-
 ```
 
+# 线程
+
+## 基本概念：程序、进程、线程
+
+* 程序(program)是为完成特定任务、用某种语言编写的一组指令的集合。即指一段静态的代码，静态对象。
+* 进程(process)是程序的一次执行过程，或是正在运行的一个程序。是一个动态的过程：有它自身的产生、存在和消亡的过程。——生命周期
+* 线程(thread)，进程可进一步细化为线程，是一个程序内部的一条执行路径。
+  1. 若一个进程同一时间并行执行多个线程，就是支持多线程的
+  2. 线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开销小
+  3. 一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资源可能就会带来安全的隐患。
+
+## 线程的创建和使用
+
+* 线程的创建有两种方法：
+
+  1. 继承Thread类
+
+  ```java
+  class My extends Thread{
+      public void run(){}
+  }
+  class Test{
+      public static void main(string[] args){
+          My my = new My();
+          my.start();
+      }
+  }
+  ```
+
+  2. 实现Runnable接口(多个线程可共享同一个接口实现类的对象，非常适合多个相同线程来处理同一份资源)：
+
+  ```java
+  class My implements Runnable{
+      run(){}
+  }
+  class Test{
+      public static void main(string[] args){
+          My my = new My();
+          new Thread(my).start();
+      }
+  }
+  ```
+* 执行`start()`方法，才会开启一个线程，`run()`只是一个方法。在当前线程中调用`start()`，会开启新的线程并执行该线程中`run()`方法，且是异步执行。
+* 关于线程的执行权，并不是执行权高先执行，而是执行权高执行的概率高。
+* 线程的生命周期：
+  ![线程的生命周期](D:\JavaCode\IDEA_JavaSenoir\Thread\img.png)
+
+## 同步代码块
+
+* 格式:
+
+```java
+synchronized(同步监视器){
+    // 需要被同步的代码  
+}
+```
+
+* 说明:
+
+> `需要被同步的代码`，即为操作共享数据的代码
+>
+> `共享数据`，即为多个线程需要操作的数据。比如卖票中的票
+>
+> `需要被同步的代码`：在被`synchronized`包裹以后，就使得一个线程在操作这些代码的过程中，其它线程必须等待。
+>
+> `同步监视器`：俗称锁。哪个线程获取了锁，哪个线程就能执行需要被同步的代码。
+>
+> 同步监视器可以使用任何一个类的对象充当。但是，多个线程必须共用同一个同步监视器。
+
+* 代码案例：
+
+同步前：（运行会出现重票等情况）
+
+```java
+public class Test {
+    public static void main(String[] args) {
+        Ticket t = new Ticket();
+        Thread t1 = new Thread(t);
+        Thread t2 = new Thread(t);
+        Thread t3 = new Thread(t);
+        t1.setName("t1窗口");
+        t2.setName("t2窗口");
+        t3.setName("t3窗口");
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+
+class Ticket implements Runnable {
+    private int tick = 100;
+
+    public void run() {
+        while (true) {
+            if (tick > 0) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(Thread.currentThread
+                        ().getName() + "售出车票，tick号为：" +
+                        tick--);
+            } else
+                break;
+        }
+    }
+}
+```
+同步：
+```java
+public class Test {
+    public static void main(String[] args) {
+        Ticket t = new Ticket();
+        Thread t1 = new Thread(t);
+        Thread t2 = new Thread(t);
+        Thread t3 = new Thread(t);
+        t1.setName("t1窗口");
+        t2.setName("t2窗口");
+        t3.setName("t3窗口");
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+
+class Ticket implements Runnable {
+    private int tick = 100;
+
+    public void run() {
+        while (true) {
+            // 这个try只是加大其他线程参与概率
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            synchronized (this) {
+                if (tick > 0) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(Thread.currentThread
+                            ().getName() + "售出车票，tick号为：" +
+                            tick--);
+                } else
+                    break;
+            }
+        }
+    }
+}
+```
+
+## 线程通信
+
+* `wait()`: 线程一旦执行此方法，就进入等待状态。同时，释放对同步监视器的调用
+* `notify()`: 一旦执行此方法，就唤醒被wait()的线程中优先级最高的线程，优先级相同则随机唤醒。被唤醒的线程从当初wait的位置继续执行。
+* `notifyAll()`:唤醒所有wait的线程
+
+**注意**
+* 此三个方法都要在同步代码块或同步方法中
+* 此三个方法的调用者必须是同步监视器
+* 此三个方法声明在Object类中
+
+案例：生产者生产包子（<=20），消费者消费包子
+实现文件：D:\JavaCode\IDEA_JavaSenoir\Thread\src\Communication\Exer\ProductTest.java
+
+# 反射（Reflection）
+
+* Reflection（反射）是被视为动态语言的关键，反射机制允许程序在执行期借助于Reflection API取得任何类的内部信息，并能直接操作任意对象的内部属性及方法。
+* 加载完类之后，在堆内存的方法区中就产生了一个Class类型的对象（一个类只有一个Class对象），这个对象就包含了完整的类的结构信息。我们可以通过这个对象看到类的结构。这个对象就像一面镜子，透过这个镜子看到类的结构，所以，我们形象的称之为：反射。
+
+## 类的加载过程
+
+类的加载(Load)-->类的链接(Link)-->类的初始化(Initialize)
+* 类的加载：将类的class文件读入内存，并为之创建一个java.lang.Class对象。此对象由类加载器完成。
+* 类的链接：将类的二进制数据合并到JRE中
+* JVM负责对类进行初始化
+
+不会自己查去
